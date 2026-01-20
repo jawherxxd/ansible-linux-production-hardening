@@ -1,0 +1,16 @@
+---
+- name: Configure SSH
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^Port ', line: "Port {{ ssh_port }}" }
+    - { regexp: '^PermitRootLogin ', line: "PermitRootLogin {{ ssh_permit_root_login }}" }
+    - { regexp: '^PasswordAuthentication ', line: "PasswordAuthentication {{ ssh_password_auth }}" }
+
+- name: Restart SSH
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+

@@ -1,0 +1,20 @@
+---
+- name: Debug admin_users
+  ansible.builtin.debug:
+    var: admin_users
+
+- name: Create admin users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: wheel
+    shell: /bin/bash
+    password: "{{ 'YourStrongPassword' | password_hash('sha512') }}"
+    state: present
+  loop: "{{ admin_users }}"
+
+- name: Remove unwanted users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ unwanted_users }}"
+

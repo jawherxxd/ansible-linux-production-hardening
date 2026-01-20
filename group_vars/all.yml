@@ -1,0 +1,34 @@
+admin_users:
+  - jawher
+  - opsadmin
+  - ansible
+
+unwanted_users:
+  - guest
+  - test
+
+ssh_port: 2222
+ssh_permit_root_login: "no"
+ssh_password_auth: "no"
+
+allowed_ports:
+  - 22
+  - 80
+  - 443
+
+remove_packages:
+  - telnet
+  - ftp
+  - rsh
+update_system: false
+
+sysctl_settings:
+  net.ipv4.ip_forward: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.all.accept_source_route: 0
+  net.ipv4.conf.all.rp_filter: 1
+  net.ipv4.conf.default.rp_filter: 1
+  kernel.randomize_va_space: 2
+
+selinux_state: enforcing
+

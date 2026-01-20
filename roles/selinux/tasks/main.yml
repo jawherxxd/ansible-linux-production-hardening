@@ -1,0 +1,17 @@
+---
+- name: Ensure SELinux is installed
+  ansible.builtin.yum:
+    name: selinux-policy-targeted
+    state: present
+
+- name: Set SELinux state
+  ansible.builtin.command:
+    cmd: "setenforce 1"
+  when: selinux_state == 'enforcing'
+
+- name: Persist SELinux state
+  ansible.builtin.replace:
+    path: /etc/selinux/config
+    regexp: '^SELINUX=.*'
+    replace: "SELINUX={{ selinux_state }}"
+

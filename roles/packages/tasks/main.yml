@@ -1,0 +1,12 @@
+---
+- name: Remove unwanted packages
+  ansible.builtin.yum:
+    name: "{{ remove_packages }}"
+    state: absent
+
+- name: Update system packages
+  ansible.builtin.yum:
+    name: '*'
+    state: latest
+  when: update_system
+
